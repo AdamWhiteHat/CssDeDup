@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "CssDeDup": {
+      "commandName": "Project",
+      "commandLineArgs": "properties --in1=\"C:\\Temp\\FS2\\FS2.Website.dedup.css\" --in2=\"C:\\Temp\\FS2\\FS2.Admin.dedup.css\" --out=\"C:\\Temp\\FS2\\FS2.PropertiesOnly.Website-Admin.css\"",
+      "workingDirectory": "C:\\Temp\\FS2"
+    }
+  }
+}

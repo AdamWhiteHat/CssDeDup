@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>false</ImplicitUsings>
+		<Nullable>annotations</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!--SelfContained>true</SelfContained-->
+		<PublishSingleFile>true</PublishSingleFile>
+		<PublishTrimmed>True</PublishTrimmed>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Dependencies\ExCSS.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Costura.Fody" Version="6.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Fody" Version="6.9.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1">
+		  <Aliases>%(Aliases)</Aliases>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Linq2Css\Linq2Css.csproj">
+		  <Private>True</Private>
+		  <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+		</ProjectReference>
+	</ItemGroup>
+	
+	<UsingTask TaskName="ILMergeTool" AssemblyFile="$(SolutionDir)Tools\ILMerge.Tools.MSBuildToolTask.dll" />
+
+	<ItemGroup>
+		<ILMergeInputAssemblies Include="$(TargetDir)CssDeDup.dll" />
+		<ILMergeInputAssemblies Include="$(TargetDir)Linq2Css.dll" />
+		<ILMergeInputAssemblies Include="$(TargetDir)ExCSS.dll" />
+		<ILMergeInputAssemblies Include="$(TargetDir)System.CommandLine.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Include="Dependencies\ExCSS.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Dependencies\Linq2Css.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Dependencies\System.CommandLine.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<Target Name="MergeAssemblies"> 
+		<ILMergeTool InputAssemblies="@(ILMergeInputAssemblies)" OutputFile="$(TargetDir)CssDeDup.dll" ToolPath="$(SolutionDir)Tools\ILMerge.exe" />
+	</Target>
+
+</Project>
