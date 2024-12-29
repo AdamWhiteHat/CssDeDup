@@ -12,7 +12,7 @@ namespace CssDeDup
 {
     public static class Match
     {
-        public static int NameAndProperties(string? fileIn1, string? fileIn2, string? fileOut)
+        public static int NameAndProperties(string fileIn1, string fileIn2, string fileOut)
         {
             MatchingJob job = new MatchingJob(fileIn1, fileIn2, fileOut, CssRulePredicates.ExactMatch);
             job.Initialize();
@@ -35,7 +35,7 @@ namespace CssDeDup
             return 0;
         }
 
-        public static int PropertiesOnly(string? fileIn1, string? fileIn2, string? fileOut)
+        public static int PropertiesOnly(string fileIn1, string fileIn2, string fileOut)
         {
             MatchingJob job = new MatchingJob(fileIn1, fileIn2, fileOut, CssRulePredicates.PropertiesOnlyMatch);
             job.Initialize();
@@ -83,7 +83,7 @@ namespace CssDeDup
 
             public List<Tuple<CssRule, CssRule>> Matches { get; set; }
 
-            public MatchingJob(string? fileIn1, string? fileIn2, string fileOut, RulePredicate predicate)
+            public MatchingJob(string fileIn1, string fileIn2, string fileOut, RulePredicate predicate)
             {
                 File_In1 = Path.GetFullPath(fileIn1);
                 File_In2 = Path.GetFullPath(fileIn2);

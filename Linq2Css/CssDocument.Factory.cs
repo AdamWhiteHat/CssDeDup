@@ -321,7 +321,7 @@ namespace Linq2Css
                 string rgbString = rgbColor.Substring(startIndex);
 
                 string toParse = rgbString.Replace(" ", "").Replace("rgb(", "").Replace(")", "");
-                string[] valueStrings = toParse.Split(',', StringSplitOptions.TrimEntries);
+                string[] valueStrings = toParse.Split(',');
                 if (valueStrings.Length != 3)
                 {
                     return rgbColor;

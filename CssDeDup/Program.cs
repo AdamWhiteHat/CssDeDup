@@ -14,19 +14,19 @@ namespace CssDeDup
     {
         static int Main(string[] args)
         {
-            Option<string?> optionFileIn1 = new Option<string?>(
+            Option<string> optionFileIn1 = new Option<string>(
                 name: "--in1",
                 description: "The first CSS file.");
             optionFileIn1.IsRequired = true;
             optionFileIn1.Arity = ArgumentArity.ExactlyOne;
             
-            Option<string?> optionFileIn2 = new Option<string?>(
+            Option<string> optionFileIn2 = new Option<string>(
                 name: "--in2",
                 description: "The second CSS file.");
             optionFileIn2.IsRequired = true;
             optionFileIn2.Arity = ArgumentArity.ExactlyOne;
 
-            Option<string?> optionFileOut = new Option<string?>(
+            Option<string> optionFileOut = new Option<string>(
                 name: "--out",
                 description: "The output CSS file.");
             optionFileOut.IsRequired = true;
