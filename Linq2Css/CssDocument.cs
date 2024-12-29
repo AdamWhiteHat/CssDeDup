@@ -12,6 +12,9 @@ namespace Linq2Css
         public CssCharset Charset { get; set; } = null;
         public List<CssImport> Imports { get; set; } = new List<CssImport>();
         public List<CssNamespace> Namespaces { get; set; } = new List<CssNamespace>();
+
+        /*   Rule containing constructs below   */
+
         public List<CssMediaRule> MediaRules { get; set; } = new List<CssMediaRule>();
         public List<CssPageRule> PageRules { get; set; } = new List<CssPageRule>();
         public List<CssContainerRule> ContainerRules { get; set; } = new List<CssContainerRule>();

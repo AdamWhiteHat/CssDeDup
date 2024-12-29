@@ -17,13 +17,13 @@ namespace CssDeDup
             MatchingJob job = new MatchingJob(fileIn1, fileIn2, fileOut, CssRulePredicates.ExactMatch);
             job.Initialize();
 
-            if (job.Matches.Count == 0)
+            if (job.StyleRules_Matches.Count == 0)
             {
                 Console.WriteLine($"No matching rules found; No action needed.");
             }
             else
             {
-                List<CssRule> matchingStyleRules = job.Matches.Select(tup => tup.Item1).ToList();
+                List<CssRule> matchingStyleRules = job.StyleRules_Matches.Select(tup => tup.Item1).ToList();
 
                 File.WriteAllText(job.File_Out3, string.Join(Environment.NewLine + Environment.NewLine, matchingStyleRules));
                 Console.WriteLine($"--out :: Wrote {matchingStyleRules.Count} matching rule(s) to output file: \"{job.File_Out3}\".");
@@ -40,7 +40,7 @@ namespace CssDeDup
             MatchingJob job = new MatchingJob(fileIn1, fileIn2, fileOut, CssRulePredicates.PropertiesOnlyMatch);
             job.Initialize();
 
-            if (job.Matches.Count == 0)
+            if (job.StyleRules_Matches.Count == 0)
             {
                 Console.WriteLine($"No matching rules found; No action needed.");
             }
@@ -49,7 +49,7 @@ namespace CssDeDup
                 string beginningComment = "                          /*\r\n<MatchingPropertyPair>     */\r\n";
                 string endComment = "                         /*\r\n</MatchingPropertyPair>    */\r\n";
 
-                List<string> matchingStyleRules = job.Matches.Select(tup =>
+                List<string> matchingStyleRules = job.StyleRules_Matches.Select(tup =>
                                                     beginningComment +
                                                     tup.Item1.GetFormattedString(1) +
                                                     Environment.NewLine +
@@ -81,7 +81,7 @@ namespace CssDeDup
             public List<CssRule> StyleRules_In1 { get; set; }
             public List<CssRule> StyleRules_In2 { get; set; }
 
-            public List<Tuple<CssRule, CssRule>> Matches { get; set; }
+            public List<Tuple<CssRule, CssRule>> StyleRules_Matches { get; set; }
 
             public MatchingJob(string fileIn1, string fileIn2, string fileOut, RulePredicate predicate)
             {
@@ -105,18 +105,18 @@ namespace CssDeDup
                 Console.WriteLine($"--in1 :: CssDocument.StyleRules.Count: {StyleRules_In1.Count}");
                 Console.WriteLine($"--in2 :: CssDocument.StyleRules.Count: {StyleRules_In2.Count}");
 
-                Matches = StyleRules_In1.PairRulesBy(StyleRules_In2, IsMatchPredicate).ToList();
+                StyleRules_Matches = StyleRules_In1.PairRulesBy(StyleRules_In2, IsMatchPredicate).ToList();
 
-                Console.WriteLine($"Matches.Count: {Matches.Count}");
+                Console.WriteLine($"Matches.Count: {StyleRules_Matches.Count}");
             }
 
 
             public void RemoveMatchingRulesFromDocuments()
             {
-                List<CssRule> toRemove1 = Matches.Select(tup => tup.Item1).ToList();
+                List<CssRule> toRemove1 = StyleRules_Matches.Select(tup => tup.Item1).ToList();
                 Document_In1.StyleRules.RemoveMany(toRemove1);
 
-                List<CssRule> toRemove2 = Matches.Select(tup => tup.Item2).ToList();
+                List<CssRule> toRemove2 = StyleRules_Matches.Select(tup => tup.Item2).ToList();
                 Document_In2.StyleRules.RemoveMany(toRemove2);
             }
 

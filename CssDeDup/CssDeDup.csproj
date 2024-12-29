@@ -9,6 +9,26 @@
 		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<MajorVersion Condition=" '$(MajorVersion)' == '' ">1</MajorVersion>
+		<MinorVersion Condition=" '$(MinorVersion)' == '' ">0</MinorVersion>
+		<PatchVersion Condition=" '$(PatchVersion)' == '' ">0</PatchVersion>
+
+		<Version>$(MajorVersion).$(MinorVersion).$(PatchVersion)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<RootNamespace>CssDeDup</RootNamespace>
+		<Title>CssDeDup</Title>
+		<Product>CssDeDup</Product>
+		<AssemblyName>CssDeDup</AssemblyName>
+		<AssemblyTitle>CssDeDup</AssemblyTitle>
+		<Authors>Adam White</Authors>
+		<Copyright>Adam White github.com/AdamWhiteHat/CssDeDup</Copyright>
+		<RepositoryUrl>https://github.com/AdamWhiteHat/CssDeDup</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Linq2Css\Linq2Css.csproj">
 			<Private>True</Private>

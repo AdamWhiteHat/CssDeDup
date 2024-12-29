@@ -1,14 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <ImplicitUsings>false</ImplicitUsings>
-    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<ImplicitUsings>false</ImplicitUsings>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="ExCSS" Version="4.3.0" />
-  </ItemGroup>
+	<PropertyGroup>
+		<MajorVersion Condition=" '$(MajorVersion)' == '' ">1</MajorVersion>
+		<MinorVersion Condition=" '$(MinorVersion)' == '' ">0</MinorVersion>
+		<PatchVersion Condition=" '$(PatchVersion)' == '' ">0</PatchVersion>
+
+		<Version>$(MajorVersion).$(MinorVersion).$(PatchVersion)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<RootNamespace>Linq2Css</RootNamespace>
+		<Title>Linq2Css</Title>
+		<Product>Linq2Css</Product>
+		<AssemblyName>Linq2Css</AssemblyName>
+		<AssemblyTitle>Linq2Css</AssemblyTitle>
+		<Authors>Adam White</Authors>
+		<Copyright>Adam White github.com/AdamWhiteHat/CssDeDup</Copyright>
+		<RepositoryUrl>https://github.com/AdamWhiteHat/CssDeDup</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ExCSS" Version="4.3.0" />
+	</ItemGroup>
 
 </Project>
