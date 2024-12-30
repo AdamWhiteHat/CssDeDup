@@ -1,10 +1,13 @@
 # CssDeDup
 
-Supports CSS file deduping, common style rule extraction and more (more detailed description below).
+Supports CSS file deduping, common style rule extraction and more ([more detailed description below](README.md#terminology)).
 
-CssDeDup depends on [ExCSS](https://github.com/TylerBrinks/ExCSS) to parse its CSS documents, allowing CssDeDup to work its magic. A big thanks to Tyler Brinks
-for writing ExCSS.
+CssDeDup depends on [ExCSS](https://github.com/TylerBrinks/ExCSS) to parse CSS documents. A big thanks to Tyler Brinks for writing ExCSS.
 
+Linq2Css is a just wrapper around ExCSS, which is intented to provide more uniform access to the relevant properties, as well as hide irrelevant properties which are only a concern of the parser.
+
+Unfortunately, a CSS document isnt just a collection of style rules, all defined at the same scope. There are constructs such as at-rules and conditional at-rules, within which style rules can be contained.
+**NOTE: Version 1.0 handles style rules at the document level ONLY, and effectively ignores CSS rules nested under at-rules, such as @media. Deduped CSS documents that are written out to disk will re-serialize these constructs as-is or as functionally-equivalent CSS.** So they are 'handled' in that sense, *but their rules do not participate in de-duplication*.
 
 # Table Of Contents
 
@@ -20,7 +23,7 @@ for writing ExCSS.
 # Detailed explaination
 
 ## Terminology
-First, to help me explain things, lets define some terminology first:
+To better help explain things, lets define some terminology first:
 
 ```
 .danger-text {
@@ -37,7 +40,10 @@ The text above is a CSS style **'rule'**.
 "red" is the **'property value'**.
 
 
-. . .
+
+
+
+Now we may proceed with the descriptions...
 
 ## Functions
 
@@ -48,7 +54,7 @@ CssDeDup has 3 different Functions:
 
 All three features take two css documents as input.
 
-It parses them into two collections of css rules. 
+It parses them into two collections of css rules. **NOTE: Once again, these are the CSS style rules defined at the document level. @media-nested rules do not participate in deduplication for version 1.0.**
 
 It then finds "matching" css rules and extracts any css rules it finds to be a match into a third CSS document.
 
@@ -70,12 +76,13 @@ The CSS rule name can be anything.
 
 ### C. Fuzzy Property Value Matching
 
-This will allow fuzzy matching on the property values being set. 
+This would ignore #1, #2 would have to match exactly, and #3 would have to 'match' according to fuzzy logic. 
 
-Examples of fuzzy matching on CSS property values:
+Examples of fuzzy logic matching on CSS property values:
 - Two px values are within +-3 px of each other.
 - Two colors are perceptually near-identical.
 
+The best way to define the set of fuzzy logic rules to use is as of yet stil undecided. Create a suggestion/feature request 'issue' if you have some thoughts on this.
 
 # Usage Examples
 
