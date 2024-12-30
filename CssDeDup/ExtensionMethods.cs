@@ -23,17 +23,4 @@ namespace CssDeDup
             }
         }
     }
-
-    public static class ListExtensionMethods
-    {
-        public static bool RemoveMany<T>(this List<T> source, IEnumerable<T> toRemove)
-        {
-            bool result = true;
-            foreach (T item in toRemove)
-            {
-                result &= source.Remove(item);
-            }
-            return result;
-        }
-    }
 }
